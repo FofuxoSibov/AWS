@@ -1,0 +1,5 @@
+<powershell>
+# Instalação do Git
+Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.33.0.windows.2/Git-2.33.0.2-64-bit.exe" -OutFile "$env:TEMP\git_installer.exe"
+Start-Process -FilePath "$env:TEMP\git_installer.exe" -ArgumentList "/SILENT" -Wait
+</powershell>

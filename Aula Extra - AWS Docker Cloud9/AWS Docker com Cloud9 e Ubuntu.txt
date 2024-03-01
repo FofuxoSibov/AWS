@@ -1,0 +1,45 @@
+sudo su -
+
+apt update
+
+apt install ca-certificates curl gnupg lsb-release unzip -y
+
+mkdir -p /etc/apt/keyrings
+
+curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo \ "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+
+systemctl enable docker && systemctl restart docker
+
+
+mkdir cloud9
+
+nano Dockerfile
+
+FROM ubuntu:noble
+# Install apache and remove the list of packages downloaded from apt-get update
+RUN apt-get update -y && \
+apt-get install -y apache2 && \
+rm -r /var/lib/apt/lists/*
+# Copy the website into the apache web root directory
+COPY resources /var/www/html
+EXPOSE 80
+CMD ["apachectl", "-D", "FOREGROUND"]
+
+
+docker -v
+
+Criar imagem com base no Dockerfile
+docker build -t cloud9 .
+
+Ver imagem criada
+docker images
+
+Rotar container 
+docker run -d -p 80:80 --name contcloud cloud9
+
+Ver container no ar
+docker ps

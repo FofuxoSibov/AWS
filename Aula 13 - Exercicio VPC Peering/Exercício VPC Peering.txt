@@ -1,0 +1,17 @@
+Dupla de 2
+- ANEIS - Danilo (Deletar o CloudPlay)
+ID da Conta: 627249964518
+ID da VPC: vpc-00d6012d60a7255b0
+
+- CloudPlay - Fernando (Deletar o ANEIS)
+ID da Conta: 753479598271
+ID da VPC: vpc-078254923e38064f2
+
+	- Gateway NAT
+	- Emparelhamento (Peering)
+		- Rotas
+	- IP Elastico
+	- VPC
+
+Deixar ligado 2 maquinas Windows
+PubAZ1a e PriAZ1a

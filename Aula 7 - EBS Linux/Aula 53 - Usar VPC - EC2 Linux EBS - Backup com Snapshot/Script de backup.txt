@@ -1,0 +1,10 @@
+https://www.esli-nux.com/2018/01/aws-snapshots-automaticos-de-ec2-e-ami.html
+
+
+https://docs.aws.amazon.com/cli/latest/reference/ec2/create-snapshots.html
+
+https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/ebs-creating-snapshot.html
+https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/snapshot-lifecycle.html
+
+
+

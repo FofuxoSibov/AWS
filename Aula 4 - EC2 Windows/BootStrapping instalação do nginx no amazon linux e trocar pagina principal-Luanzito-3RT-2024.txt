@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo yum install -y nginx
+sudo systemctl enable nginx
+sudo echo 'server luan nginx sla' > /usr/share/nginx/html/index.html
+sudo systemctl restart nginx

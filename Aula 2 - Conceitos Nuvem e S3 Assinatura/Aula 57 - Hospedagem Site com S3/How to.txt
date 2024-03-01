@@ -1,0 +1,15 @@
+Mas basicamente você cria um bucket no s3
+Entre no bucket >  Permissões (Todo o acesso público liberado)
+Ainda nas permissões, mais abaixo, você vai nas 
+edições ACL para deixar o acesso público liberado 
+Salva as alterações!
+
+Agora na aba de Propriedades do bucket você role a página até o fim e verás 
+"Hospedagem de site estático". Edite!
+Configure apenas isso na parte de site estático, e salve as alterações
+Após feito isso, suba um index.html estático e teste
+
+Eu não vou passar a opção de site com Route53(DNS) e CloudFront, pq o Educate não tem acesso.
+www.fofuxosenai.com.br
+Mas irá funcionar com o nome de DNS da AWS
+

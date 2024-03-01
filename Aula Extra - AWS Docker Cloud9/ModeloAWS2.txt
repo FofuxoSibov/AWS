@@ -1,0 +1,190 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Intro to AWS Cloud9"
+Parameters:
+
+  VpcCIDR:
+    #AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
+    Default: 10.16.0.0/16
+    Description: "The CIDR block for the VPC"
+    Type: String
+    AllowedValues:
+      - 10.16.0.0/16
+
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+
+  SubnetCIDR:
+    #AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
+    Default: 10.16.10.0/24
+    Description: "CIDR for public subnet"
+    Type: String
+    AllowedValues:
+      - 10.16.10.0/24
+
+  LabUserId:
+    Default: arn:aws:sts::012345678:assumed-role/vocareum-role/username
+    Description: "session user ARN"
+    Type: String
+
+Resources:
+
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        IgnorePublicAcls: false
+        BlockPublicPolicy: false
+        RestrictPublicBuckets: false
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Statement:
+          Action:
+            - "s3:GetObject"
+          Effect: Allow
+          Principal: "*"
+          Resource:
+            - !Sub "arn:aws:s3:::${S3Bucket}/*"
+            - !Sub "arn:aws:s3:::${S3Bucket}"
+
+  VPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+       - Key: Name
+         Value: "Cloud9 VPC"
+
+  subnet:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+     VpcId: !Ref VPC
+     CidrBlock: !Ref SubnetCIDR
+     MapPublicIpOnLaunch: true
+     Tags:
+      - Key: Name
+        Value: "Cloud9 subnet"
+
+  IGW:
+    Type: "AWS::EC2::InternetGateway"
+    DependsOn: VPC
+
+  AttachGateway:
+    Type: "AWS::EC2::VPCGatewayAttachment"
+    DependsOn:
+      - VPC
+      - IGW
+    Properties:
+     VpcId: !Ref VPC
+     InternetGatewayId: !Ref IGW
+
+  ec2Route:
+    Type: "AWS::EC2::RouteTable"
+    DependsOn:
+      - VPC
+      - AttachGateway
+    Properties:
+      VpcId: !Ref VPC
+
+  routeOut:
+    Type: "AWS::EC2::Route"
+    DependsOn:
+      - ec2Route
+      - AttachGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref IGW
+      RouteTableId: !Ref ec2Route
+
+  SubnetRouteAssociate:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DependsOn:
+      - ec2Route
+      - subnet
+    Properties:
+      RouteTableId: !Ref ec2Route
+      SubnetId: !Ref subnet
+
+  Cloud9:
+    Type: "AWS::Cloud9::EnvironmentEC2"
+    Properties:
+      InstanceType: t2.micro
+      ImageId: amazonlinux-2-x86_64
+      SubnetId: !Ref subnet
+      OwnerArn: !Ref LabUserId
+      Name: cloud9-start
+
+  s3Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: t2.micro
+      SubnetId: !Ref subnet
+      IamInstanceProfile: !Ref S3CopyProfile
+      ImageId: !Ref LatestAmiId
+      UserData:
+        Fn::Base64:
+          !Sub |
+          #!/bin/bash -xe
+          aws s3 cp s3://awsu-hosting/catwebsite/s3/acd-dynamo-create/index.html s3://${S3Bucket}/index.html
+          aws s3 cp s3://awsu-hosting/catwebsite/s3/acd-dynamo-create/cat.jpg s3://${S3Bucket}/cat.jpg
+
+  S3CopyProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: S3CopyRole
+
+  S3CopyPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: S3CopyPolicy
+      PolicyDocument:
+        Statement:
+        - Effect: Allow
+          Action:
+          - s3:ListBucket
+          - s3:PutObject
+          - s3:GetObject
+          - s3:PubObjectAcl
+          Resource: "*"
+      Roles:
+      - Ref: S3CopyRole
+
+  S3CopyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+
+Outputs:
+
+  S3Bucket:
+    Description: "Name of S3 bucket"
+    Value: !Ref S3Bucket
+
+  WebsiteURL:
+    Description: "URL for website hosted on S3"
+    Value: !GetAtt [S3Bucket, WebsiteURL]
+
+  #S3BucketSecureURL:
+  #  Description: "Name of S3 bucket to hold website"
+  #  Value: !Join ['', ['https://', !GetAtt [S3Bucket, DomainName]]]

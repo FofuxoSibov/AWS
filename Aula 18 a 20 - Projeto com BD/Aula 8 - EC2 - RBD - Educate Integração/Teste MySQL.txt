@@ -1,0 +1,38 @@
+MYSQL - RDS
+CONFIGURAÇÕES: RDS - MySQL
+DB INSTANCE IDENTIFIER: MYSQL-PROVAONE
+database: unicorns
+master username: admin
+master password: 12345987
+Endpoint: mysql-provaone.cfjbd1wcefyp.sa-east-1.rds.amazonaws.com
+VPC Default: 172.31.0.0/16
+Subnet: 172.31.0.0/20, 172.31.32.0/20, 172.31.16.0/20.
+
+EC2 SSH acessando RDS MySQL
+yum install mysql -y
+mysql -h mysql-provaone.cfjbd1wcefyp.sa-east-1.rds.amazonaws.com -P 3306 -u admin -p
+12345987
+
+
+
+create database unicorns;  ##criar database
+##verificar databases existentes
+show databases;
+
+##"entrar" no database para fazer configurações dentro dele
+use unicorns; 
+
+##criar table de acordo com o que foi solicitado na prova
+create table  unicorns (
+unicornid varchar(256),
+unicornlocation varchar(256)
+);
+
+ ##mostrar tables existentes
+show tables;
+
+##acrescentar coisas na tabela
+insert into unicorns(uni1,uni2) values ('mayara','gabriel'); 
+
+##ver conteúdo que foi acrescentado na tabela
+select * from unicorns;

@@ -1,0 +1,78 @@
+USE labdb;
+
+CREATE TABLE tb_tiposusuario(
+id_tipousuario INT(2),
+titulo VARCHAR(255),
+PRIMARY KEY(id_tipousuario)
+);
+
+CREATE TABLE tb_usuarios(
+id_usuario INT(5),
+nome VARCHAR(255),
+cpf VARCHAR(11),
+id_tipousuario INT(2),
+PRIMARY KEY(id_usuario),
+FOREIGN KEY(id_tipousuario) REFERENCES tb_tiposusuario(id_tipousuario)
+);
+
+INSERT INTO tb_tiposusuario VALUES (
+1,
+'Professor'
+);
+
+INSERT INTO tb_tiposusuario VALUES (
+2,
+'Aluno'
+);
+
+INSERT INTO tb_tiposusuario VALUES (
+3,
+
+'Admin'
+);
+
+INSERT INTO tb_usuarios VALUES (
+1,
+'Fofuxo',
+'12345678901',
+
+3
+);
+
+INSERT INTO tb_usuarios VALUES (
+2,
+'Fernando',
+'34576589078',
+
+1
+);
+
+INSERT INTO tb_usuarios VALUES (
+3,
+'Gabi',
+'67824310984',
+
+2
+);
+
+SELECTS:
+SELECT * FROM tb_tiposusuario;
+SELECT * FROM tb_usuarios;
+
+SELECT
+
+u.id_usuario,
+
+u.nome,
+
+u.cpf,
+
+t.titulo
+
+FROM
+
+tb_usuarios u
+
+JOIN
+
+tb_tiposusuario t ON u.id_tipousuario = t.id_tipousuario;

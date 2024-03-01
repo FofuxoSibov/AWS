@@ -1,0 +1,11 @@
+EC2
+ - Volumes
+ - Snapshot
+ - IP Eslastico
+EFS - Sistema de Arquivos
+S3 - Bucket
+VPC
+ - Subredes
+ - Rotas
+ - Gateway
+ - Grupo de Segurança

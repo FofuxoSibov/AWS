@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/46209156/aws-ec2-install-chrome-as-user-data

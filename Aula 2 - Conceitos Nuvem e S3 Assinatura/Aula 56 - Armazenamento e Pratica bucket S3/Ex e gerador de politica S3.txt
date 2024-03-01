@@ -1,0 +1,5 @@
+Gerador
+https://awspolicygen.s3.amazonaws.com/policygen.html
+
+Exemplo de Politica S3
+https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html

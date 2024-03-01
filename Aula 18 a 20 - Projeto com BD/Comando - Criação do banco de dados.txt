@@ -1,0 +1,28 @@
+Execute os seguintes comandos:
+
+sudo su -
+mysql -u admin -p -h <seu_endpoint>
+e preencha sua senha
+
+//Criar DATABASE com o mesmo nome utilizado na criação banco de dados mysql, se tiver dúvida sobre o nome do DATABASE olhe o endpoint (labdb.cluster-cvke0ks22ysb.us-east-1.rds.amazonaws.com) 
+o primeiro campo é o nome do banco que será criado 
+
+Comando para criar o banco de dados:
+CREATE DATABASE labdb; 
+Verificar se o DATABASE foi criado 
+SHOW DATABASES;
+
+
+-- Criação da tabela
+CREATE TABLE Exemplo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50),
+    idade INT,
+    email VARCHAR(100)
+);
+
+-- Inserção de dados na tabela
+INSERT INTO Exemplo (nome, idade, email)
+VALUES ('João', 25, 'joao@example.com'),
+       ('Maria', 30, 'maria@example.com'),
+       ('Pedro', 28, 'pedro@example.com');

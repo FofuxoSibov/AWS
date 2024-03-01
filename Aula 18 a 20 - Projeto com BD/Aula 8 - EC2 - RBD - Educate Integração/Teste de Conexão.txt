@@ -1,0 +1,87 @@
+MinhaRedeVPCBitBeat
+192.168.0.0/16
+
+SubredePublica1BitBeat
+192.168.1.0/24
+
+SubredePublica2BitBeat
+192.168.2.0/24
+
+SubredePrivada3BitBeat
+192.168.3.0/24
+
+SubredePrivada4BitBeat
+192.168.4.0/24
+Mudar pra us-east-1a (observer as demais sub-redes e escolhar uma diferente)
+-----------------------
+
+Meu-GW-Internet-BitBeat
+
+-----------------------
+
+RTPublica1BitBeat
+192.168.1.0/24
+
+RTPublica2BitBeat
+192.168.2.0/24
+
+RTPrivada3BitBeat
+192.168.3.0/24
+
+RTPrivada4BitBeat
+192.168.4.0/24
+
+
+#!/bin/bash
+# Instalar Apache no Servidor Web and PHP
+yum install -y httpd mysql php
+# Download WebAPP para testar o banco de dados
+wget https://aws-tc-largeobjects.s3.amazonaws.com/AWS-TC-AcademyACF/acf-lab3-vpc/lab-app.zip
+#Descompactar o WebAPP de teste
+unzip lab-app.zip -d /var/www/html/
+# Liga servidor web
+chkconfig httpd on
+service httpd start
+
+Script Ubuntu
+#!/bin/bash
+# Instalar Apache no Servidor Web, cliente MySQL, PHP e Unzip
+sudo apt update
+sudo apt install -y apache2 mysql-client php unzip 
+# Download WebAPP para testar o banco de dados
+sudo wget https://aws-tc-largeobjects.s3.amazonaws.com/AWS-TC-AcademyACF/acf-lab3-vpc/lab-app.zip
+#Descompactar o WebAPP de teste
+sudo unzip lab-app.zip -d /var/www/html/
+# Ativa a pagina no servidor web
+sudo /etc/init.d/apache2 reload
+
+MySQL
+Endpoint: dbteste.cswycefphej6.us-east-1.rds.amazonaws.com
+dbteste
+admin
+SenaiAWS
+
+db2teste
+
+mysql -u admin -pSenaiAWS -h dbteste.cswycefphej6.us-east-1.rds.amazonaws.com 
+
+mysql -u admin -pSenaiAWS -h dbbitbeat.ckdhswdfn7wy.us-east-1.rds.amazonaws.com
+
+mysql -u admin -pSenaiAWS -h dbbitbeat.cswycefphej6.us-east-1.rds.amazonaws.com
+
+#Conexão com o BD
+mysql -u admin -pSenaiAWS -h dbbitbeat.cswycefphej6.us-east-1.rds.amazonaws.com dbbitbeat
+
+#Criar uma tabela
+CREATE TABLE address (id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY, lastname VARCHAR(30), firstname VARCHAR(30), phone VARCHAR(30), email VARCHAR(30));
+
+#Inserir dados na Tabela
+INSERT INTO address (lastname, firstname, phone, email) VALUES ( "Johnson", "Roberto", "123-456-7890", "robertoj@someaddress.com"), ( "Doe", "Jane", "010-110-1101", "janed@someotheraddress.org" );
+
+INSERT INTO address (lastname, firstname, phone, email) VALUES ( "Sibov", "Danilo", "55-11-98548-4200", "danilo.sibov@gmail.com"), ( "Doe", "Jane", "010-110-1101", "janed@someotheraddress.org" );
+
+#Ver dados
+select * from address;
+
+#Deletar com a condição de ID=4 (linha4)
+delete from address where id=4;

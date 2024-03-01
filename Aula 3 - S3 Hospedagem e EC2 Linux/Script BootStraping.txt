@@ -1,0 +1,5 @@
+#!/bin/bash
+yum -y install httpd
+systemctl enable httpd
+systemctl start httpd
+echo '<html><h1>Bem vindo ao seu primeiro Web Server!</h1></html>' > /var/www/html/index.html

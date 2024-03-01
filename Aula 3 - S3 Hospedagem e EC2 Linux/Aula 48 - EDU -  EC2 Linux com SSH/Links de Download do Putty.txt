@@ -1,0 +1,11 @@
+PuttyGen 64 bits
+https://the.earth.li/~sgtatham/putty/latest/w64/puttygen.exe 
+
+PuttyGen 32 bits
+https://the.earth.li/~sgtatham/putty/latest/w32/puttygen.exe 
+
+PuTTY 64 bits
+https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
+
+PuTTY 32 bits
+https://the.earth.li/~sgtatham/putty/latest/w32/putty.exe

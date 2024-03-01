@@ -1,0 +1,47 @@
+Amazon Elastic Compute Cloud (EC2): um serviço da web que fornece capacidade de computação redimensionável
+e segura na nuvem; projetado para tornar a computação em nuvem em escala da web mais fácil para os desenvolvedores
+
+Amazon Machine Images (AMIs): modelos pré-configurados para instâncias; pacote necessário para o seu servidor
+(incluindo o sistema operacional e software adicional), você pode criar o AMI
+
+Instância: uma instância é um servidor virtual na nuvem AWS
+
+Regiões: locais físicos para seus recursos (como instâncias)
+
+Nuvens privadas virtuais (VPCs): redes virtuais que você cria que são logicamente isoladas do resto da nuvem AWS e que você
+pode opcionalmente se conectar à sua própria rede
+
+Bootstrapping: código executado quando um computador é inicializado; um processo que carrega e executa comandos automaticamente.
+
+Disco SSD ou magnetico - O que muda é a Velocidade - IOPS I/O (Input/Output)(Dados) por segundos
+
+Grupos de segurança:
+Os grupos de segurança da AWS (SGs) são associados às instâncias do Amazon EC2 e fornecem segurança no nível de protocolo e acesso à porta.
+*Um grupo de segurança funciona da mesma maneira que um firewall.
+*Ele contém um conjunto de regras que filtram o tráfego que entra e sai de uma instância do Amazon EC2.
+Por padrão, todo o tráfego não local é bloqueado.
+Por exemplo, os servidores da web geralmente permitem acesso ao tráfego público na porta 80 (HTTP) e / ou na porta 443 (HTTPS).
+
+Par de Chaves: Um par de chaves consiste em uma chave pública que a AWS armazena e um arquivo de chave privada que você armazena.
+Juntos, eles permitem que você se conecte à sua instância com segurança. 
+Para AMIs do Windows, o arquivo de chave privada é necessário para obter a senha usada para efetuar login em sua instância. 
+Para AMIs do Linux, o arquivo de chave privada permite que você faça SSH com segurança em sua instância.
+
+Endereços IP públicos:
+Quando você para e inicia uma instância, o endereço IPv4 público da instância é liberado e um novo endereço IPv4 público é atribuído.
+No entanto, a instância irá reter:
+*Seus endereços IPv4 privados
+*Quaisquer endereços Elastic IP
+*Qualquer endereço IPv6
+
+Virtualization type: Linux AMIs usam um dos dois tipos de virtualização — paravirtual (PV) ou máquina virtual de hardware (HVM). 
+Você não pode redimensionar uma instância que foi iniciada de um PV AMI para um tipo de instância que seja apenas HVM. 
+Verifique o tipo de instância na guia instance Description em Virtualization.
+Architecture: Amazon Machine Images (AMIs) são específicas para a arquitetura do processador, portanto,
+você deve selecionar um tipo de instância com a mesma arquitetura de processador do tipo de instância atual.
+
+Snapshot - Copio / Foto do seu ambiente atual
+
+SSH Ex: root@IP_do_Servidor - é solicitado a senha
+
+@By Lukas 2S-2020
